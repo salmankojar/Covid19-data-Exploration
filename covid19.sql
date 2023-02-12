@@ -213,3 +213,5 @@ FROM
 WHERE 
 	d.continent IS NOT NULL;
         
+	
+-- To see my tableau Visualisations click here https://public.tableau.com/views/Covid19EDADashboard/Dashboard1?:language=en-US&:display_count=n&:origin=viz_share_link
