@@ -37,7 +37,7 @@ ORDER BY
 
 -- Comparing total cases vs total deaths
 SELECT  location,
-		date,
+	date,
         total_cases,
         total_deaths,
         (total_deaths/total_cases) * 100 AS Death_percentage
@@ -51,7 +51,7 @@ ORDER BY
 -- comparing countrywise latest records of total cases and total deaths
 -- shows current total cases and death
 SELECT  ds.location,
-		date,
+	date,
         total_cases,
         total_deaths,
         ROUND((total_deaths/total_cases) * 100,2) AS Death_percentage
@@ -72,7 +72,7 @@ ORDER BY
 
 -- comparing total cases vs population
 SELECT 	location,
-		date,
+	date,
         population,
         total_cases,
         ROUND((total_cases/population) * 100,3) AS percent_infected_population
@@ -154,14 +154,14 @@ WITH cte_pop_vs_vac AS
 (
 	SELECT
 		d.continent,
-        d.location,
-        d.date,
-        d.population,
-        v.new_vaccinations,
-        SUM(v.new_vaccinations) OVER (PARTITION BY d.location ORDER BY d.location,d.date) AS total_people_vaccinated_till_date
+        	d.location,
+        	d.date,
+        	d.population,
+        	v.new_vaccinations,
+       		SUM(v.new_vaccinations) OVER (PARTITION BY d.location ORDER BY d.location,d.date) AS total_people_vaccinated_till_date
 	FROM
 		deaths d
-		  INNER JOIN
+	       	 JOIN
 		vaccinations v 
 	  ON d.location = v.location AND
 		 d.date = v.date
@@ -176,14 +176,14 @@ FROM
 CREATE TEMPORARY TABLE t_popvsvac
 	SELECT
 		d.continent,
-        d.location,
-        d.date,
-        d.population,
-        v.new_vaccinations,
-        SUM(v.new_vaccinations) OVER (PARTITION BY d.location ORDER BY d.location,d.date) AS total_people_vaccinated_till_date
+        	d.location,
+        	d.date,
+        	d.population,
+        	v.new_vaccinations,
+        	SUM(v.new_vaccinations) OVER (PARTITION BY d.location ORDER BY d.location,d.date) AS total_people_vaccinated_till_date
 	FROM
 		deaths d
-		  INNER JOIN
+		 JOIN
 		vaccinations v 
 	  ON d.location = v.location AND
 		 d.date = v.date
@@ -198,7 +198,7 @@ FROM
 -- Creating View to store data for later visualizations
 CREATE VIEW v_percent_pop_infected AS
 SELECT
-		d.continent,
+	d.continent,
         d.location,
         d.date,
         d.population,
@@ -206,10 +206,10 @@ SELECT
         SUM(v.new_vaccinations) OVER (PARTITION BY d.location ORDER BY d.location,d.date) AS total_people_vaccinated_till_date
 FROM
 		deaths d
-		  INNER JOIN
+		  JOIN
 		vaccinations v 
 	  ON d.location = v.location AND
 		 d.date = v.date
 WHERE 
-		d.continent IS NOT NULL;
+	d.continent IS NOT NULL;
         
